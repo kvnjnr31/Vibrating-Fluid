@@ -1,0 +1,65 @@
+{
+  "R": 0.45,
+  "d": 1.0,
+  "K": 0.9114592477755994,
+  "self_mass_isolated_outer": 0.31808625617596664,
+  "self_mass_theory": 0.3180862561759666,
+  "pair_coupling_vs_P": {
+    "2": 0.08490325209713184,
+    "4": 0.09001053163928413,
+    "8": 0.09147538044839533,
+    "12": 0.09150710755699117
+  },
+  "pair_coupling_leading_order": 0.07826114725389438,
+  "band_Gamma": [
+    1.1236563020527075,
+    1.123656300355666
+  ],
+  "band_M": [
+    1.47363587284954,
+    0.7979779986370161
+  ],
+  "band_K": [
+    0.9122038884922464,
+    0.912203444683011
+  ],
+  "upper_band": [
+    0.9133524746725757,
+    1.4736302905191165
+  ],
+  "lower_band": [
+    0.7979782879635922,
+    1.123656300355666
+  ],
+  "max_group_velocity": [
+    0.41669435451022774,
+    0.1607948835806786
+  ],
+  "polarization": {
+    "k_along_x": {
+      "upper_w": 1.1257970478116726,
+      "upper_oval_axis_deg": 0.0,
+      "lower_w": 1.1167187953599265,
+      "lower_oval_axis_deg": 45.0
+    },
+    "k_along_y": {
+      "upper_w": 1.126892278792083,
+      "upper_oval_axis_deg": 45.0,
+      "lower_w": 1.1156473048358395,
+      "lower_oval_axis_deg": 0.0
+    }
+  },
+  "cells": 2107,
+  "min_mass_eigenvalue": 0.4210099242012611,
+  "closed_energy_swing": 1.3100631690576847e-14,
+  "drive_w": 1.05,
+  "y_column_phase_slope": -0.9701673279930619,
+  "y_column_note": "time factor exp(-i w t): positive slope = phase moves outward; negative = phase moves inward while energy goes out (backward wave)",
+  "band_at_measured_ky": [
+    1.1644830429837891,
+    1.040393467300859
+  ],
+  "gap_w1.6_amp_ratio_r3_over_r1": 0.23423168170690148,
+  "pass_w1.3_amp_ratio_r3_over_r1": 0.6972238728411495,
+  "seconds": 55.5
+}

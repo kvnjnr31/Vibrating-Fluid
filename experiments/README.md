@@ -13,3 +13,4 @@
 | 9 | `09_maxwell_cells/` | Turning cells as Maxwell vortices: spin patterns, currents, mode sweep, stroboscopic movie |
 | 10 | `10_wave_chain/` | Waves along a chain of free cells: thin layers, self-driven cells, spin (EM analogs) |
 | 11 | `11_maxwell_lattice/` | Maxwell's lattice with an ideal medium (option A): a lossless EM wave from turning cells and idle wheels |
+| 12 | `12_ideal_fluid_cells/` | Oval shells coupled only by an ideal fluid (option B): lossless bands, gaps, beams, backward waves |
