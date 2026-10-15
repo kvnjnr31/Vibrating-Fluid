@@ -30,6 +30,8 @@ Drive: centre oval at 22.5 degrees (equal a and b). Far-field ratio of oval b to
 | 0.99 | both (overlap 0.96 to 1.01) | 0.42 |
 | 1.15 | upper only | 1.96 (mostly b) |
 
+Crest direction (first-zone wavenumber dotted with the outward direction, power-weighted over 12 sectors): 0.88 gives -1.86 and 1.15 gives -1.58 (crests in, energy out: backward waves); 1.30 gives +1.30, 1.40 gives +2.65 and 1.50 gives +1.32 (crests out). At 1.50 the far field is almost pure oval b (b / a = 78): rows of 45 and 135 degree ovals that alternate up the lattice. Movie: `four_lobed_w150.mp4` (`tension.py --w 1.5`).
+
 Reading: the lattice acts like a birefringent crystal. The same source sends out a different oval axis at different frequencies, and each wave keeps an axis tied to the cell tension pattern instead of to its direction. The filter is not perfect: waves travelling at oblique angles carry both ovals. The waves form narrow beams along a few lattice directions. The lower band falls away from long waves, so (as at 1.05 in experiment 12) the crests of the 0.88 wave should run inward while the energy runs outward.
 
 ## Outputs

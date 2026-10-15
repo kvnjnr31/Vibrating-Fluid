@@ -131,6 +131,37 @@ def far_ratio(z, ring, a, b):
             "far_b_over_a": float(np.abs(b[sel]).mean() / np.abs(a[sel]).mean())}
 
 
+def movies(bl, Mi, K, z, ring, M, D, Kv, ws, outname):
+    N = len(z)
+    Rn.band_axes = lambda ax, bl_, Mi_, K_, mark=None: band_axes(ax, bl_, Mi_, K_, mark, legend_small=True)
+    parts = []
+    for w in ws:
+        Rn.W_DRIVE = w
+        Tp = 2 * np.pi / w
+        path = os.path.join(HERE, f"run_w{int(round(w * 100))}.npz")
+        if not os.path.exists(path):
+            def drive(t, w=w, Tp=Tp):
+                f = np.zeros(2 * N)
+                f[0] = f[1] = 0.05 / np.sqrt(2) * np.sin(w * t) * min(1.0, t / (3 * Tp))
+                return f
+            tt, qq, vv, aa = Rn.newmark(M, D, Kv, drive, 40 * Tp, Tp / 32, 32 // Rn.PER)
+            np.savez_compressed(path, t=tt, q=qq, v=vv, a=aa)
+        run = dict(np.load(path))
+        which = "mostly oval a (0$^\\circ$) travels" if w < 0.95 else "mostly oval b (45$^\\circ$) travels"
+        which += ", crests in" if w < 1.25 else ", crests out"
+        out = os.path.join(HERE, f"part_w{int(round(w * 100))}.mp4")
+        Rn.movie(out, run, bl, Mi, K, split=True,
+                 title=f"Four-lobed tension, drive {w}: {which}",
+                 note="Every shell: tension highest at 0 and 90 degrees, lowest at 45. Centre oval driven at "
+                      "22.5 degrees (equal a and b). Ideal fluid, no loss; outer rings hidden: sponge.")
+        parts.append(out)
+    lst = os.path.join(HERE, "parts.txt")
+    open(lst, "w").write("".join(f"file '{p}'\n" for p in parts))
+    os.system(f"ffmpeg -loglevel error -y -f concat -safe 0 -i {lst} -c copy {os.path.join(HERE, outname)}")
+    for p in parts + [lst]:
+        os.remove(p)
+
+
 def main(movie_only=False):
     bl, Mi, K = Rn.setup()
     z, ring, M, D, Kv = build(bl, Mi, K)
@@ -157,34 +188,15 @@ def main(movie_only=False):
         json.dump(res, open(os.path.join(HERE, "results.json"), "w"), indent=2)
         print(json.dumps(res, indent=2), flush=True)
         checks_figure(os.path.join(HERE, "four_lobed_checks.png"), bl, Mi, K, maps, res)
-    Rn.band_axes = lambda ax, bl_, Mi_, K_, mark=None: band_axes(ax, bl_, Mi_, K_, mark, legend_small=True)
-    parts = []
-    for w in W_MOVIE:
-        Rn.W_DRIVE = w
-        Tp = 2 * np.pi / w
-        path = os.path.join(HERE, f"run_w{int(round(w * 100))}.npz")
-        if not os.path.exists(path):
-            def drive(t, w=w, Tp=Tp):
-                f = np.zeros(2 * N)
-                f[0] = f[1] = 0.05 / np.sqrt(2) * np.sin(w * t) * min(1.0, t / (3 * Tp))
-                return f
-            tt, qq, vv, aa = Rn.newmark(M, D, Kv, drive, 40 * Tp, Tp / 32, 32 // Rn.PER)
-            np.savez_compressed(path, t=tt, q=qq, v=vv, a=aa)
-        run = dict(np.load(path))
-        which = "mostly oval a (0$^\\circ$) travels" if w < 0.95 else "mostly oval b (45$^\\circ$) travels"
-        out = os.path.join(HERE, f"part_w{int(round(w * 100))}.mp4")
-        Rn.movie(out, run, bl, Mi, K, split=True,
-                 title=f"Four-lobed tension, drive {w}: {which}",
-                 note="Every shell: tension highest at 0 and 90 degrees, lowest at 45. Centre oval driven at "
-                      "22.5 degrees (equal a and b). Ideal fluid, no loss; outer rings hidden: sponge.")
-        parts.append(out)
-    lst = os.path.join(HERE, "parts.txt")
-    open(lst, "w").write("".join(f"file '{p}'\n" for p in parts))
-    os.system(f"ffmpeg -loglevel error -y -f concat -safe 0 -i {lst} -c copy {os.path.join(HERE, 'four_lobed.mp4')}")
-    for p in parts + [lst]:
-        os.remove(p)
+    movies(bl, Mi, K, z, ring, M, D, Kv, W_MOVIE, "four_lobed.mp4")
     print("done", flush=True)
 
 
 if __name__ == "__main__":
-    main("--movie" in sys.argv)
+    if "--w" in sys.argv:                      # e.g. --w 1.5 : one extra movie at that drive
+        w = float(sys.argv[sys.argv.index("--w") + 1])
+        bl, Mi, K = Rn.setup()
+        z, ring, M, D, Kv = build(bl, Mi, K)
+        movies(bl, Mi, K, z, ring, M, D, Kv, (w,), f"four_lobed_w{int(round(w * 100))}.mp4")
+    else:
+        main("--movie" in sys.argv)
