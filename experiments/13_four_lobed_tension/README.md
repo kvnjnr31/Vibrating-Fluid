@@ -38,6 +38,7 @@ Reading: the lattice acts like a birefringent crystal. The same source sends out
 
 - `four_lobed_checks.png`: (A) bands vs uniform tension, (B) lines of equal frequency, (C) a and b amplitude maps at 0.88, 0.99 and 1.15.
 - `four_lobed.mp4`: drive 0.88, then drive 1.15. Panel B shows oval a and oval b side by side on one scale.
+- `lobes_and_tension.png` (`lobes_figure.py`): where the lobes and nodes of each oval sit on the tension pattern, and why oval b is the stiffer one.
 - `results.json`.
 
 ## Run
