@@ -11,3 +11,4 @@ __pycache__/
 validation/*.npz
 experiments/**/*.npz
 !experiments/**/*.png
+!experiments/**/*.mp4

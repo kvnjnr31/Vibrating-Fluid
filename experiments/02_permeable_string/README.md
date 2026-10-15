@@ -38,6 +38,21 @@ Mean jets. The amplitude of cos(2kx) in the mean vertical flow above the string,
 
 Instantaneous flow (panels A and B, k = +w). At wt = 0 the antinodes bulged outward jet fluid straight out along the radius, and the antinodes pulled inward draw fluid back through the string. Half a cycle later the roles swap.
 
+## Tracers
+
+`tracers.py` carries 4096 fluid tracers through the same flow for 30 cycles, for k = -w and +w (`tracers.mp4`). The tracers start in flat horizontal stripes, and the stripes bend where the fluid moves faster or slower.
+
+    python experiments/02_permeable_string/tracers.py           # about 3 min after the spin-up, 6 min each with it
+    python experiments/02_permeable_string/tracers.py --movie   # movie and drift figure from saved tracks
+
+![drift](tracers_drift.png)
+
+The figure compares the mean upward speed of the tracers (displacement over whole cycles) with the period-averaged speed at fixed points, in a band 0.1 to 0.3 lambda above and below the string.
+
+- k = +w: the tracers rise about 10% faster than q0 above the antinodes and 10% slower above the nodes, as the fixed-point average says. The jets at the antinodes are real transport of fluid, not an artifact of averaging at fixed points.
+- Below the string the pattern flips: fluid approaches faster under the nodes. So fluid comes up under the nodes, shifts sideways near the string toward the antinodes, and leaves above the antinodes.
+- k = -w: the jets sit close to the string (peak at 0.9 delta) and are weak in this band, about 1-2% of q0, the same size as the scatter of the tracer average.
+
 ## What this changes in the theory
 
 The notes predicted mean jets at the nodal lines for k > 0, from the mean sideways flux <J_s> = -(k W0^2 / 4) grad_s(Y^2), which runs toward the nodes. The simulation gives the opposite: k > 0 puts the mean jets at the antinodes, and k < 0 at the nodes. The sideways-flux argument tracks only flow along the shell. It leaves out the mean flow that the oscillating permeation drives through the Reynolds stress and its coupling with the shell motion. A second-order theory with permeation (an extension of `validation/streaming_theory.py`) is needed to settle which term wins.
@@ -46,4 +61,4 @@ The notes predicted mean jets at the nodal lines for k > 0, from the mean sidewa
 
 - Theory of the mean flow with permeation and a source, to compare with these runs.
 - Darcy permeation, q = kappa (p_below - p_above), instead of a prescribed q.
-- Tracer particles for the Lagrangian mean near the string.
+- Tracer statistics within a few delta of the string, where the two averages may differ.

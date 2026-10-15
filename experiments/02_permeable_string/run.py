@@ -37,7 +37,8 @@ from lbm.ib import IBString  # noqa: E402
 from lbm.boundaries import outlet_top  # noqa: E402
 
 
-def run(k_over_w, A=2.0, q0=0.005, lam=128, half=128, tau=1.0, delta=6.0, avg_periods=4):
+def build(k_over_w, A=2.0, q0=0.005, lam=128, half=128, tau=1.0, delta=6.0):
+    """Set up the box, source, outlet and string. Returns the solver, the string hook and the parameters."""
     nx, ny = lam, 2 * half + 2
     sim = LBM(nx, ny, tau)
     sim.solid[:, 0] = True                                # source row
@@ -68,6 +69,15 @@ def run(k_over_w, A=2.0, q0=0.005, lam=128, half=128, tau=1.0, delta=6.0, avg_pe
         ib.force(s, X, Y, Ux, Uy, ds)
 
     periods = int(np.ceil(half ** 2 / sim.nu / period))
+    par = dict(k_over_w=k_over_w, A=A, q0=q0, lam=lam, half=half, y0=y0, w=w, kw=kw, kp=kp, nu=sim.nu,
+               delta=np.sqrt(2 * sim.nu / w), period=period, periods=periods)
+    return sim, hook, par
+
+
+def run(k_over_w, avg_periods=4, **kw_args):
+    sim, hook, par = build(k_over_w, **kw_args)
+    nx, ny = sim.nx, sim.ny
+    period, periods, y0, q0, lam = par["period"], par["periods"], par["y0"], par["q0"], par["lam"]
     sim.run(periods * period, hook)
     mu, mv = np.zeros((nx, ny)), np.zeros((nx, ny))
     snaps = {}
@@ -84,8 +94,8 @@ def run(k_over_w, A=2.0, q0=0.005, lam=128, half=128, tau=1.0, delta=6.0, avg_pe
     mv /= n_avg
     rows = {d: int(round(y0 + d)) for d in (-60, -30, 30, 60)}
     flux = {d: float(mv[:, j].sum() / (q0 * lam)) for d, j in rows.items()}
-    return dict(k_over_w=k_over_w, A=A, q0=q0, lam=lam, y0=y0, w=w, kw=kw, kp=kp, nu=sim.nu,
-                delta=np.sqrt(2 * sim.nu / w), period=period, periods=periods, mu=mu, mv=mv,
+    par = {key: val for key, val in par.items() if key != "half"}
+    return dict(**par, mu=mu, mv=mv,
                 peak_u=snaps["peak"][0], peak_v=snaps["peak"][1],
                 trough_u=snaps["trough"][0], trough_v=snaps["trough"][1], flux=flux)
 
