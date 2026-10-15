@@ -7,3 +7,5 @@
 | 3 | `03_two_strings/` | Two permeable strings in phase and in opposite phase: how does fluid move between them? |
 | 4 | `04_string_stack/` | A stack of Darcy-permeable strings: toward a string at every height |
 | 5 | `05_locked_cells/` | A square array of vibrating oval cells, aligned or geared |
+| 6 | `06_permeable_cells/` | Inflow from the left through permeable vibrating cells (aligned run only) |
+| 7 | `07_turning_cells/` | Cells turned by moving nodes: swirl, idle-wheel gaps and currents (Maxwell) |
