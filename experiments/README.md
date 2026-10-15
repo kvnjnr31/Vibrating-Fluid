@@ -6,3 +6,4 @@
 | 2 | `02_permeable_string/` | Same string, permeable, with a source below: does permeation move the mean jets? |
 | 3 | `03_two_strings/` | Two permeable strings in phase and in opposite phase: how does fluid move between them? |
 | 4 | `04_string_stack/` | A stack of Darcy-permeable strings: toward a string at every height |
+| 5 | `05_locked_cells/` | A square array of vibrating oval cells, aligned or geared |
