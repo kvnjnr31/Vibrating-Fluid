@@ -14,3 +14,4 @@
 | 10 | `10_wave_chain/` | Waves along a chain of free cells: thin layers, self-driven cells, spin (EM analogs) |
 | 11 | `11_maxwell_lattice/` | Maxwell's lattice with an ideal medium (option A): a lossless EM wave from turning cells and idle wheels |
 | 12 | `12_ideal_fluid_cells/` | Oval shells coupled only by an ideal fluid (option B): lossless bands, gaps, beams, backward waves |
+| 13 | `13_four_lobed_tension/` | Experiment 12 with tension 1 + 0.24 cos 4 theta around every shell: split bands, birefringence |

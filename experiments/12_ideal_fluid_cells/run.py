@@ -219,7 +219,7 @@ def checks_figure(path, bl, Mi, K, closed, fd, res):
     fig.savefig(path, dpi=110)
 
 
-def movie(path, run, bl, Mi, K, fps=24):
+def movie(path, run, bl, Mi, K, fps=24, split=False, title=None, note=None):
     plt = style()
     from matplotlib.animation import FFMpegWriter
     from matplotlib.collections import LineCollection
@@ -236,7 +236,11 @@ def movie(path, run, bl, Mi, K, fps=24):
     qsc = np.percentile(np.abs(q[-PER * 4:, :2 * Nw]), 99) + 1e-12
     fig = plt.figure(figsize=(16, 9.4))
     axA = fig.add_axes([0.03, 0.08, 0.52, 0.80])
-    axB = fig.add_axes([0.60, 0.47, 0.36, 0.41])
+    if split:
+        axB = fig.add_axes([0.575, 0.47, 0.205, 0.41])
+        axB2 = fig.add_axes([0.785, 0.47, 0.205, 0.41])
+    else:
+        axB = fig.add_axes([0.60, 0.47, 0.36, 0.41])
     axC = fig.add_axes([0.63, 0.08, 0.33, 0.30])
     im = axA.imshow(np.zeros_like(xg), extent=(-half, half, -0.75 * half, 0.75 * half), origin="lower",
                     cmap="Greys", vmin=-1, vmax=1, interpolation="bicubic")
@@ -259,16 +263,26 @@ def movie(path, run, bl, Mi, K, fps=24):
     axB.set_aspect("equal")
     axB.set_xticks([])
     axB.set_yticks([])
-    axB.set_title("(B) Whole lattice: oval amplitude a")
+    axB.set_title("(B) Whole lattice: oval a (axis 0$^\\circ$)" if split else "(B) Whole lattice: oval amplitude a")
+    if split:
+        sc2 = axB2.scatter(z.real[m], z.imag[m], c=np.zeros(m.sum()), cmap="Greys", s=6, vmin=-1, vmax=1, lw=0)
+        axB2.set_aspect("equal")
+        axB2.set_xticks([])
+        axB2.set_yticks([])
+        axB2.set_title("oval b (axis 45$^\\circ$)", fontsize=13)
+        sc.set_sizes([6])
+        qb_all = q[:, 1::2][:, m]
     band_axes(axC, bl, Mi, K, mark=W_DRIVE)
     axC.set_title("(C) Bands; line = drive")
     axC.legend(loc="upper left", fontsize=8.5, frameon=False)
     stamp = fig.text(0.5, 0.955, "", ha="center", fontsize=17)
-    fig.text(0.5, 0.015, "Ideal fluid, no viscosity: the shells push the fluid, the fluid pushes the neighbours. "
-             "Nothing is lost. Square in (B) = view in (A). Outer rings of (B) hidden: sponge.",
+    fig.text(0.5, 0.015, note or ("Ideal fluid, no viscosity: the shells push the fluid, the fluid pushes the neighbours. "
+             "Nothing is lost. Square in (B) = view in (A). Outer rings of (B) hidden: sponge."),
              ha="center", fontsize=11.5, color="0.3")
     qa_all = q[:, 0::2][:, m]
     bsc = np.percentile(np.abs(qa_all[-PER * 4:]), 98) + 1e-12
+    if split:                                   # one scale for a and b, so the weaker one shows as weaker
+        bsc = np.percentile(np.abs(np.r_[qa_all[-PER * 4:].ravel(), qb_all[-PER * 4:].ravel()]), 98) + 1e-12
     writer = FFMpegWriter(fps=fps, codec="libx264", extra_args=["-pix_fmt", "yuv420p", "-crf", "24"])
     with writer.saving(fig, path, dpi=100):
         for k in range(len(t)):
@@ -288,7 +302,9 @@ def movie(path, run, bl, Mi, K, fps=24):
             lc.set_segments(segs)
             lc_ax.set_segments(axes_)
             sc.set_array(np.tanh(qa_all[k] / bsc))
-            stamp.set_text(f"Option B: oval shells coupled by an ideal fluid — t = {t[k]:6.1f}  "
+            if split:
+                sc2.set_array(np.tanh(qb_all[k] / bsc))
+            stamp.set_text(f"{title or 'Option B: oval shells coupled by an ideal fluid'} — t = {t[k]:6.1f}  "
                            f"(drive period {2 * np.pi / W_DRIVE:.1f})")
             writer.grab_frame()
 
