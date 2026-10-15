@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.png
+*.pdf
+!notes/Figures/*.png
+*.aux
+*.log
+*.out
