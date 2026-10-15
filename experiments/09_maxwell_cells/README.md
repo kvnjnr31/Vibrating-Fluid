@@ -19,7 +19,9 @@ Reproduce:
 
 ![fields](maxwell_fields.png)
 
-Movie: `maxwell_cells.mp4` (one frame per cycle, 120 cycles).
+Movies:
+- `maxwell_cells_full.mp4` (`movie_full.py`): part 1 shows 6 cycles in real time, with the shells vibrating and their nodes travelling around them; part 2 shows the 120-cycle drift, one frame per cycle, with each shell's vibration range as a grey band.
+- `maxwell_cells.mp4`: the drift only, one frame per cycle. In this view every frame catches the shells at the same moment of their cycle, so they look still.
 
 Swirl per cell (mean |H|, in units of the wall speed A w): uniform 0.062, sheared 0.112, one reversed cell 0.092, checkerboard 0.450. The stronger drive raises the uniform swirl from 0.026 (experiment 7) to 0.062. Cells whose neighbors turn the other way swirl faster: in the checkerboard every neighbor pair meshes like gears, and the swirl is about 7 times the uniform value.
 
