@@ -9,3 +9,5 @@ __pycache__/
 !validation/checks.png
 !validation/string_*.png
 validation/*.npz
+experiments/**/*.npz
+!experiments/**/*.png

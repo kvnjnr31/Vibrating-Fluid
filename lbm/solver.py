@@ -48,13 +48,18 @@ class LBM:
         self.f_new[:] = self.f
 
     def step(self, wall=None):
-        """One time step. wall(t, sim) may update uwx, uwy, Fx, Fy before the step."""
+        """One time step. wall(t, sim) may update uwx, uwy, Fx, Fy before the step.
+        self.post(sim), if set, runs after streaming (open boundaries)."""
         if wall is not None:
             wall(self.t, self)
         collide(self.f, self.solid, self.Fx, self.Fy, self.omega, self.rho, self.ux, self.uy)
         stream(self.f, self.f_new, self.solid, self.uwx, self.uwy, self.rho)
         self.f, self.f_new = self.f_new, self.f
+        if self.post is not None:
+            self.post(self)
         self.t += 1
+
+    post = None
 
     def run(self, n, wall=None, every=0, callback=None):
         for _ in range(int(n)):
