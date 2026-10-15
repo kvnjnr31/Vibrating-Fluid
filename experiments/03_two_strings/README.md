@@ -27,7 +27,7 @@ In phase (panels A-C). The two strings move together, so the gap keeps its width
 
 Opposite phase (panels D-F). The strings move toward and away from each other, so the gap squeezes shut at one antinode while it opens at the next. Fluid in the gap is pumped sideways, from the narrowing part to the widening part: up to 8.9 q0 at wt = 0, about 250 times the in-phase value. The pumping reverses each half cycle, and the mean flow in the gap forms a row of closed cells, with mean sideways speeds up to 0.23 q0. Tracers in the gap sweep sideways about 2.7 times more than in phase, but still rise at q0 on average.
 
-Outside the pair. Above and below, the mean flow matches a single k > 0 string in both runs: jets at the antinodes above (about 14% of q0, 0.25 lambda above the upper string) and faster inflow under the nodes below. The phase between the strings changes the gap, not the flow outside.
+Outside the pair. Above and below, the mean flow matches a single k > 0 string in both runs: jets at the antinodes above (about 14% of q0, 18 spacings above the upper string) and faster inflow under the nodes below. The phase between the strings changes the gap, not the flow outside.
 
 ## Open
 
