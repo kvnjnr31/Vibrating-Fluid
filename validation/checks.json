@@ -1,0 +1,27 @@
+{
+  "poiseuille": {
+    "err": 0.0005083088966998782,
+    "ok": true,
+    "seconds": 1.0
+  },
+  "stokes": {
+    "err": 0.0007496610695290464,
+    "ok": true,
+    "delta": 10.300645387285055,
+    "seconds": 0.5
+  },
+  "rotlet": {
+    "err": 0.011703170077696555,
+    "ok": true,
+    "R": 20.0,
+    "Omega": 0.002,
+    "seconds": 135.4
+  },
+  "speed": {
+    "mlups_numba": 21.255767546821065,
+    "mlups_numpy": 2.4232083930071804,
+    "speedup": 8.771745594873433,
+    "ok": true,
+    "seconds": 7.3
+  }
+}
