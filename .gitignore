@@ -7,3 +7,5 @@ __pycache__/
 *.log
 *.out
 !validation/checks.png
+!validation/string_*.png
+validation/*.npz
