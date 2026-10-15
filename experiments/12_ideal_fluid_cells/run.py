@@ -376,5 +376,46 @@ def main(movie_only=False):
     print("done", flush=True)
 
 
+def upper_band_movie(w=1.30):
+    """Same run and movie with the drive in the upper band, where crests and energy both move out."""
+    global W_DRIVE
+    W_DRIVE = w
+    tag = f"w{int(round(w * 100))}"
+    bl, Mi, K = setup()
+    z, ring, M, D = big_lattice(bl, Mi, K)
+    N = len(z)
+    f = np.zeros(2 * N); f[0] = 1.0
+    q_fd = response(M, D, K, w, f)
+    # crest direction along the +y column: phase slope (time factor exp(-i w t))
+    col = np.nonzero((np.abs(z.real) < 1e-6) & (z.imag > 2) & (ring < SPONGE - 2))[0]
+    col = col[np.argsort(z.imag[col])]
+    ky = np.polyfit(z.imag[col], np.unwrap(np.angle(q_fd[0::2][col])), 1)[0]
+    res = {"drive_w": w, "y_column_phase_slope": float(ky),
+           "band_at_measured_ky": bands(bl, Mi, K, np.array([0.0]), np.array([abs(ky)]))[0][0].tolist()}
+    Tp = 2 * np.pi / w
+    dt = Tp / 32
+
+    def drive(t):
+        g = np.zeros(2 * N)
+        g[0] = 0.05 * np.sin(w * t) * min(1.0, t / (3 * Tp))
+        return g
+    tt, qq, vv, aa = newmark(M, D, K, drive, 45 * Tp, dt, 32 // PER)
+    amp = np.hypot(qq[:, 0::2], qq[:, 1::2])
+    front = {}
+    for T in (10, 20, 40, 60):
+        k = np.argmin(np.abs(tt - T))
+        a = amp[max(0, k - PER):k + 1].max(0)
+        front[str(T)] = int(ring[(a > 0.05 * a[ring == 1].max()) & (ring < SPONGE)].max())
+    res["energy_front_ring_vs_time"] = front
+    json.dump(res, open(os.path.join(HERE, f"results_{tag}.json"), "w"), indent=2)
+    print(json.dumps(res, indent=2), flush=True)
+    np.savez_compressed(os.path.join(HERE, f"run_point_{tag}.npz"), t=tt, q=qq, v=vv, a=aa)
+    movie(os.path.join(HERE, f"ideal_fluid_cells_{tag}.mp4"), dict(t=tt, q=qq, v=vv, a=aa), bl, Mi, K)
+    print("done", flush=True)
+
+
 if __name__ == "__main__":
-    main("--movie" in sys.argv)
+    if "--upper" in sys.argv:
+        upper_band_movie()
+    else:
+        main("--movie" in sys.argv)

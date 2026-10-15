@@ -30,6 +30,7 @@ Reading: the ideal fluid makes the shells a lossless lattice of resonators coupl
 
 - `ideal_fluid_checks.png`: (A) bands vs the option A light line, (B) lines of equal frequency, (C) energy, (D) wave amplitude from one driven cell.
 - `ideal_fluid_cells.mp4`: (A) shells drawn as ovals (bulge drawn larger, line = long axis) with the fluid pressure, (B) the whole lattice, (C) the bands with the drive frequency.
+- `ideal_fluid_cells_w130.mp4`, `results_w130.json`: same movie with the drive at 1.30 in the upper band (`run.py --upper`). There the crests move outward with the energy. The wavelength is short (about 2.3 cells), and the clearest beams run near the horizontal (within 15 degrees). Crest direction by sector (first-zone wavenumber dotted with the outward direction): +0.2 to +1.4 at 1.30, against -0.9 to -2.8 at 1.05.
 - `results.json`, `blocks_R045.pkl` (bulk coupling blocks).
 
 ## Run
