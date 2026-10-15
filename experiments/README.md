@@ -9,3 +9,4 @@
 | 5 | `05_locked_cells/` | A square array of vibrating oval cells, aligned or geared |
 | 6 | `06_permeable_cells/` | Inflow from the left through permeable vibrating cells (aligned run only) |
 | 7 | `07_turning_cells/` | Cells turned by moving nodes: swirl, idle-wheel gaps and currents (Maxwell) |
+| 8 | `08_driven_cell/` | One cell driven, the rest free on springs: does the geared pattern spread, and how fast? |

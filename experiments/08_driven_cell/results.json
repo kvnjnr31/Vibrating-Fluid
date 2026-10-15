@@ -1,0 +1,194 @@
+{
+ "added_mass": 1630.7562465548308,
+ "damping": 4.403462171866316,
+ "added_mass_b": 1631.8549926714202,
+ "damping_b": 8.381144784698945,
+ "period": 2262,
+ "w": 0.0027777123373915057,
+ "G_x1_over_wc": [
+  0.1898,
+  -0.832
+ ],
+ "G_x2_over_wc": [
+  0.0001,
+  -0.44
+ ],
+ "G_diag1_over_wc": [
+  0.0124,
+  0.442
+ ],
+ "G_y1_over_wc": [
+  0.1898,
+  -0.832
+ ],
+ "c_eff_aligned": 7.251,
+ "extra_added_mass_aligned": 527.3,
+ "c_eff_geared": 1.476,
+ "extra_added_mass_geared": -681.5,
+ "c_eff_stripes_x": 4.444,
+ "extra_added_mass_stripes_x": 77.9,
+ "along_x": [
+  {
+   "cells": 1,
+   "arrival_periods": 0.75,
+   "amp_free": 0.2157,
+   "phase_free_pi": -0.774,
+   "amp_theory": 0.1985,
+   "phase_theory_pi": -0.757
+  },
+  {
+   "cells": 2,
+   "arrival_periods": 1.25,
+   "amp_free": 0.0492,
+   "phase_free_pi": 0.493,
+   "amp_theory": 0.0411,
+   "phase_theory_pi": 0.524
+  },
+  {
+   "cells": 3,
+   "arrival_periods": 2.0,
+   "amp_free": 0.0125,
+   "phase_free_pi": -0.221,
+   "amp_theory": 0.0094,
+   "phase_theory_pi": -0.168
+  },
+  {
+   "cells": 4,
+   "arrival_periods": 3.0,
+   "amp_free": 0.0028,
+   "phase_free_pi": 0.998,
+   "amp_theory": 0.002,
+   "phase_theory_pi": -0.921
+  }
+ ],
+ "diag1_free": {
+  "amp_a": 0.103,
+  "phase_a_pi": 0.423,
+  "amp_b": 0.0,
+  "amp_theory_a": 0.0898,
+  "phase_theory_a_pi": 0.456,
+  "amp_theory_b": 0.0
+ },
+ "knight_free": {
+  "amp_a": 0.0346,
+  "phase_a_pi": -0.354,
+  "amp_b": 0.0018,
+  "amp_theory_a": 0.028,
+  "phase_theory_a_pi": -0.303,
+  "amp_theory_b": 0.0019
+ },
+ "M": 1630.7562465548308,
+ "K": 0.025164805725161287,
+ "Q_lone": 2.06,
+ "ringup_periods": 0.33,
+ "size_sweep": [
+  {
+   "R": 10.0,
+   "delta_over_R": 0.6,
+   "added_mass_over_rho_pi_R2": 1.215,
+   "G1_over_wc": [
+    0.0197,
+    -0.1806
+   ],
+   "Gdiag_over_wc": [
+    -0.002,
+    0.0019
+   ],
+   "c_geared_over_c": 0.27,
+   "c_aligned_over_c": 1.715,
+   "model_amp_along_x": [
+    0.22432,
+    0.05419,
+    0.01396,
+    0.00377
+   ],
+   "model_lag_pi_along_x": [
+    0.942,
+    1.875,
+    2.802,
+    3.728
+   ]
+  },
+  {
+   "R": 20.0,
+   "delta_over_R": 0.3,
+   "added_mass_over_rho_pi_R2": 1.298,
+   "G1_over_wc": [
+    0.0953,
+    -0.1641
+   ],
+   "Gdiag_over_wc": [
+    -0.0122,
+    0.0023
+   ],
+   "c_geared_over_c": 0.335,
+   "c_aligned_over_c": 1.647,
+   "model_amp_along_x": [
+    0.1985,
+    0.04111,
+    0.00918,
+    0.00222
+   ],
+   "model_lag_pi_along_x": [
+    0.757,
+    1.476,
+    2.167,
+    2.847
+   ]
+  },
+  {
+   "R": 40.0,
+   "delta_over_R": 0.15,
+   "added_mass_over_rho_pi_R2": 1.282,
+   "G1_over_wc": [
+    0.3051,
+    -0.1468
+   ],
+   "Gdiag_over_wc": [
+    -0.0372,
+    0.0058
+   ],
+   "c_geared_over_c": 0.39,
+   "c_aligned_over_c": 1.564,
+   "model_amp_along_x": [
+    0.24432,
+    0.05826,
+    0.01699,
+    0.00602
+   ],
+   "model_lag_pi_along_x": [
+    0.545,
+    0.997,
+    1.381,
+    1.782
+   ]
+  }
+ ],
+ "mass10_along_x": [
+  {
+   "cells": 1,
+   "arrival_periods": 2.75,
+   "amp": 0.2133,
+   "phase_pi": -0.775
+  },
+  {
+   "cells": 2,
+   "arrival_periods": 7.25,
+   "amp": 0.0485,
+   "phase_pi": 0.487
+  },
+  {
+   "cells": 3,
+   "arrival_periods": 12.5,
+   "amp": 0.0122,
+   "phase_pi": -0.242
+  },
+  {
+   "cells": 4,
+   "arrival_periods": 17.25,
+   "amp": 0.0026,
+   "phase_pi": 0.96
+  }
+ ],
+ "mass10_Q_lone": 11.32
+}
