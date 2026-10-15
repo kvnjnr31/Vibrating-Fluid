@@ -33,3 +33,27 @@ def outlet_top(f, rho_out):
             cu = CX[i] * u + CY[i] * v
             e = 1.0 + 3.0 * cu + 4.5 * cu * cu - uu
             f[i, x, j] = W[i] * rho_out * e + (f[i, x, jb] - W[i] * r * e)
+
+
+@njit(parallel=True, cache=True)
+def outlet_right(f, rho_out):
+    """Fixed-pressure outlet on the right column (x = nx - 1), same scheme as outlet_top.
+    Inlet on the left: make column 0 solid and give it wall velocity (q0, 0)."""
+    _, nx, ny = f.shape
+    i, ib = nx - 1, nx - 2
+    for y in prange(ny):
+        r = 0.0
+        jx = 0.0
+        jy = 0.0
+        for k in range(9):
+            fk = f[k, ib, y]
+            r += fk
+            jx += fk * CX[k]
+            jy += fk * CY[k]
+        u = jx / r
+        v = jy / r
+        uu = 1.5 * (u * u + v * v)
+        for k in range(9):
+            cu = CX[k] * u + CY[k] * v
+            e = 1.0 + 3.0 * cu + 4.5 * cu * cu - uu
+            f[k, i, y] = W[k] * rho_out * e + (f[k, ib, y] - W[k] * r * e)

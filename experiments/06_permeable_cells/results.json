@@ -1,0 +1,11 @@
+{
+  "aligned": {
+    "flux_over_q0_height": {
+      "inlet side": 1.001000744153766,
+      "middle": 1.0097194649366645,
+      "outlet side": 1.0103978935811317
+    },
+    "through_fraction": 3.481173936852368,
+    "seconds": 672.7
+  }
+}
