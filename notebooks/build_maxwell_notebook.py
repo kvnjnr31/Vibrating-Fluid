@@ -81,6 +81,76 @@ Two examples to keep in mind:
 - **A gas at pressure $p$:** $\sigma = -p\,I$. Every cut feels the same push, $\mathbf{t} = -p\,\mathbf{n}$.
 - **A rope** pulled with tension $T$ along the unit vector $\mathbf{e}$: $\sigma_{ij} = T\,e_i e_j$. A cut across the rope ($\mathbf{n} = \mathbf{e}$) feels $\mathbf{t} = T\mathbf{e}$. A cut along the rope ($\mathbf{n}\perp\mathbf{e}$) feels nothing.
 
+**The table in 2D.** The stress at a point is four numbers. Each one answers: *on a cut facing this way, how hard is the force pushing that way?*
+
+$$\sigma = \begin{bmatrix}\sigma_{xx} & \sigma_{xy}\\ \sigma_{yx} & \sigma_{yy}\end{bmatrix} = \begin{bmatrix}\sigma_{x} & \tau_{xy}\\ \tau_{yx} & \sigma_{y}\end{bmatrix}$$
+
+The diagonal entries ($\sigma_x$, $\sigma_y$) pull or push straight across a face: **normal stress**. The off-diagonal entries ($\tau_{xy} = \tau_{yx}$) drag along a face: **shear stress**. In 3D the table grows to $3\times3$ (the Cauchy stress tensor). The 2D table is its top-left block, used when nothing changes along $z$. Since the table is symmetric, it does not matter whether rows or columns are read as "the face".
+
+The figure below draws the table on a small square of material:
+
+- **(a)** a general state: normal arrows on every face, plus shear arrows along them;
+- **(b)** the rod pulled along $y$, $\sigma = \begin{bmatrix}0 & 0\\ 0 & F/A\end{bmatrix}$: only the top and bottom faces are pulled;
+- **(c)** Maxwell's medium with the field along $y$: the same pull along the field lines, plus an equal push on the side faces;
+- **(d)** the rod again, cut at 45°: the force on the slanted cut, $\mathbf t = \sigma\mathbf n$, splits into a part straight across the cut (normal) and a part along it (shear).
+
+Arrows pointing **away** from a face mean tension (pull). Arrows pointing **into** a face mean pressure (push).
+""")
+
+code(r"""
+def arrow(ax, start, vec, ls="-", lw=2.0, color="k"):
+    ax.annotate("", xy=np.add(start, vec), xytext=start,
+                arrowprops=dict(arrowstyle="-|>", color=color, lw=lw, ls=ls, mutation_scale=16))
+
+def draw_element(ax, S, title, labels=False, scale=0.8, field=False):
+    S = np.asarray(S, float); big = np.abs(S).max()
+    if field:                                                    # faint field lines along y
+        for xl in np.linspace(-1.6, 1.6, 9): ax.plot([xl, xl], [-2, 2], color="0.88", lw=1, zorder=0)
+    ax.add_patch(plt.Rectangle((-1, -1), 2, 2, fc="0.92", ec="k", lw=1.5, zorder=1))
+    names = {(1, 0): (r"$\sigma_{xx}$", r"$\tau_{yx}$"), (0, 1): (r"$\sigma_{yy}$", r"$\tau_{xy}$")}
+    for nvec in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+        nvec = np.array(nvec, float); tang = np.array([-nvec[1], nvec[0]])
+        t = S @ nvec; tn, ts = t @ nvec, t @ tang
+        face = nvec*1.0
+        if abs(tn) > 1e-9:
+            L = scale*abs(tn)/big
+            if tn > 0: arrow(ax, face, nvec*L)                   # tension: away from the face
+            else: arrow(ax, face + nvec*L, -nvec*L)              # pressure: into the face
+        if abs(ts) > 1e-9:                                       # shear: along the face, just outside it, off to one side
+            L = 0.7; d = np.sign(ts)*tang                      # drawn at a fixed length for clarity
+            arrow(ax, face + nvec*0.12 + tang*0.55 - d*L/2, d*L, color="0.45")
+        key = tuple(nvec.astype(int))
+        if labels and key in names:
+            ax.text(*(face + nvec*1.15), names[key][0], fontsize=13, ha="center", va="center")
+            ax.text(*(face + nvec*0.38 + tang*0.55), names[key][1], fontsize=13, ha="center", va="center", color="0.35")
+    ax.set_xlim(-2.3, 2.3); ax.set_ylim(-2.3, 2.3); ax.set_aspect("equal"); ax.axis("off"); ax.set_title(title)
+
+fig, axs = plt.subplots(1, 4, figsize=(17, 4.6))
+draw_element(axs[0], [[1.0, 0.45], [0.45, 0.7]], "(a) General 2D stress", labels=True)
+draw_element(axs[1], [[0, 0], [0, 1.0]], "(b) Rod pulled along y")
+axs[1].text(0, -2.15, r"$\sigma = [[0,\ 0],\ [0,\ F/A]]$", ha="center", fontsize=12)
+draw_element(axs[2], [[-1.0, 0], [0, 1.0]], "(c) Maxwell: field along y", field=True)
+axs[2].text(0, -2.15, r"$\frac{\mu}{8\pi}|\alpha|^2\,[[-1,\ 0],\ [0,\ +1]]$", ha="center", fontsize=12)
+
+ax = axs[3]                                                     # (d) slanted cut through the rod
+S = np.array([[0, 0], [0, 1.0]]); nvec = np.array([-1, 1])/np.sqrt(2)   # outward normal of the cut
+ax.add_patch(plt.Polygon([[-1, -1], [1, -1], [1, 1]], fc="0.92", ec="k", lw=1.5))
+ax.plot([-1, 1], [-1, 1], color="k", lw=2.5)
+arrow(ax, (0, -1), (0, -0.8))                                   # the pull on the bottom face
+t = S @ nvec; tn = (t @ nvec)*nvec; ts = t - tn
+p = np.array([0.0, 0.0])
+arrow(ax, p, 1.3*t, lw=2.6)
+arrow(ax, p, 1.3*tn, ls="--", color="0.35"); arrow(ax, p, 1.3*ts, ls=":", color="0.35")
+ax.text(*(1.3*t + [0.08, 0.1]), r"$\mathbf{t} = \sigma\mathbf{n}$", fontsize=13)
+ax.text(*(1.3*tn + [-0.75, 0.05]), "normal", fontsize=11, color="0.35")
+ax.text(*(1.3*ts + [0.05, -0.1]), "shear", fontsize=11, color="0.35")
+arrow(ax, (-0.55, -0.55), 0.55*nvec, color="0.6", lw=1.5); ax.text(-1.15, -0.2, r"$\mathbf{n}$", fontsize=13, color="0.45")
+ax.set_xlim(-2.3, 2.3); ax.set_ylim(-2.3, 2.3); ax.set_aspect("equal"); ax.axis("off"); ax.set_title("(d) Rod cut at 45 degrees")
+plt.tight_layout(); plt.show()
+""")
+
+md(r"""
+
 ### Step 2. A stress that changes from place to place pushes the material
 
 Take a small box of size $dx \times dy$. The right face feels $+\sigma_{xx}(x + dx)\,dy$ in the $x$ direction. The left face, with normal $-\hat{\mathbf x}$, feels $-\sigma_{xx}(x)\,dy$. The top and bottom faces add the shear $\sigma_{xy}$ in the same way. The net $x$ force is
