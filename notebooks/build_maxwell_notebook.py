@@ -61,21 +61,122 @@ md(r"""
 ---
 ## Part 1. Maxwell's vortex stress (1861, Part I)
 
-**Maxwell's picture.** Space is full of small vortices. Each vortex spins about an axis along the magnetic force $\boldsymbol{\alpha}$. A spinning vortex pushes outward, like a spinning bucket of water. So the medium has extra pressure across the lines of force and a tension along them. Maxwell writes the stress (Prop. II) as
+**Maxwell's picture.** Space is full of small vortices. Each vortex spins about an axis along the magnetic force $\boldsymbol{\alpha}$. A spinning vortex flings its fluid outward, like a spinning bucket of water, so it pushes on its neighbors from the side. Along its axis it does not. So the medium pushes harder across the lines of force than along them.
 
-$$\sigma_{ij} = \frac{\mu}{4\pi}\,\alpha_i\alpha_j - p_1\,\delta_{ij}, \qquad p_1 = \frac{\mu}{8\pi}\,|\boldsymbol{\alpha}|^2 .$$
+Maxwell turns that picture into a **stress**, then into a **force**. This part rebuilds the elasticity needed for both steps (Steps 1–5), then checks the result on a wire.
 
-The force on a small piece of the medium is the divergence of the stress (Prop. III): $f_i = \partial_j \sigma_{ij}$. This is the same rule as in elasticity: a stress that varies from place to place pushes on the material.
+### Step 1. What a stress is
 
-**Course link: Theory of Elasticity.** In elasticity, $f_i = \partial_j\sigma_{ij}$ is the equilibrium equation. Maxwell treats the magnetic field exactly as a stress field in a solid.
+Cut a material along a small surface. Let $\mathbf{n}$ be the unit normal of the cut. The material on one side pulls (or pushes) on the other side with a force per unit area $\mathbf{t}$, the **traction**. The stress $\sigma$ is the table of numbers that turns the normal into the traction:
 
-A vector identity splits the force into two parts:
+$$t_i = \sigma_{ij}\,n_j \qquad (\text{sum over the repeated index } j).$$
 
-$$\mathbf{f} = \frac{\mu}{4\pi}\Big[\boldsymbol{\alpha}\,(\nabla\cdot\boldsymbol{\alpha}) \;-\; \boldsymbol{\alpha}\times(\nabla\times\boldsymbol{\alpha})\Big].$$
+In 2D, $\sigma$ is a $2\times2$ table:
 
-The first part acts on magnetic "poles". The second part acts on electric currents, since Maxwell later shows that the current is proportional to $\nabla\times\boldsymbol{\alpha}$. In modern form the second part is $\mathbf{J}\times\mathbf{B}$.
+- $\sigma_{xx}$: the push or pull straight across a cut that faces $x$. Positive means **tension** (the two sides pull on each other). Negative means **pressure** (they push).
+- $\sigma_{xy} = \sigma_{yx}$: a sideways drag along the cut (**shear**). The table is symmetric, or a small square would spin up on its own.
 
-**Check.** The cell below takes a round wire with a uniform current. Inside, $\boldsymbol{\alpha} = \tfrac{J}{2}(-y, x)$. Outside, $\boldsymbol{\alpha} = \tfrac{J a^2}{2}(-y, x)/r^2$. It builds Maxwell's stress on a grid, takes its divergence numerically, and compares with the formula. Units with $\mu/4\pi = 1$.
+Two examples to keep in mind:
+
+- **A gas at pressure $p$:** $\sigma = -p\,I$. Every cut feels the same push, $\mathbf{t} = -p\,\mathbf{n}$.
+- **A rope** pulled with tension $T$ along the unit vector $\mathbf{e}$: $\sigma_{ij} = T\,e_i e_j$. A cut across the rope ($\mathbf{n} = \mathbf{e}$) feels $\mathbf{t} = T\mathbf{e}$. A cut along the rope ($\mathbf{n}\perp\mathbf{e}$) feels nothing.
+
+### Step 2. A stress that changes from place to place pushes the material
+
+Take a small box of size $dx \times dy$. The right face feels $+\sigma_{xx}(x + dx)\,dy$ in the $x$ direction. The left face, with normal $-\hat{\mathbf x}$, feels $-\sigma_{xx}(x)\,dy$. The top and bottom faces add the shear $\sigma_{xy}$ in the same way. The net $x$ force is
+
+$$\big[\sigma_{xx}(x+dx) - \sigma_{xx}(x)\big]dy + \big[\sigma_{xy}(y+dy) - \sigma_{xy}(y)\big]dx \;\approx\; \Big(\frac{\partial \sigma_{xx}}{\partial x} + \frac{\partial \sigma_{xy}}{\partial y}\Big)\,dx\,dy .$$
+
+Divide by the area. The force per unit area (in 3D, per unit volume) is
+
+$$f_i = \partial_j\,\sigma_{ij}, \qquad\text{the divergence of the stress.}$$
+
+A uniform stress gives no force: opposite faces pull equally. Only a change in stress pushes. For a gas, $\sigma = -pI$ gives $\mathbf f = -\nabla p$: the gas pushes from high pressure to low.
+
+**Course link: Theory of Elasticity.** The elasticity course writes the same balance as $\partial_j\sigma_{ij} + b_i = 0$ (equilibrium) or $\rho\,\ddot u_i = \partial_j\sigma_{ij} + b_i$ (motion). There, the stress comes from the strain through Hooke's law. In Maxwell's medium, the stress comes from the field $\boldsymbol\alpha$. The balance law does not change.
+""")
+
+md(r"""
+### Step 3. Maxwell's stress
+
+Maxwell finds (Prop. II) that the pressure across the lines of force exceeds the pressure along them by $\tfrac{\mu}{4\pi}|\boldsymbol\alpha|^2$. Here $\mu$ plays the density of the vortex medium and $|\boldsymbol\alpha|$ the speed of the vortex rims, so the excess is "density times speed squared", like the pressure in a spinning bucket. As a stress:
+
+$$\sigma_{ij} = \underbrace{\frac{\mu}{4\pi}\,\alpha_i\alpha_j}_{\text{a rope along }\boldsymbol\alpha} \;-\; \underbrace{p_1\,\delta_{ij}}_{\text{a gas}} .$$
+
+The first term is the rope of Step 1 with $\mathbf e = \boldsymbol\alpha/|\boldsymbol\alpha|$ and $T = \tfrac{\mu}{4\pi}|\boldsymbol\alpha|^2$. The second is a plain pressure $p_1$ in all directions. Maxwell leaves $p_1$ general. The choice $p_1 = \tfrac{\mu}{8\pi}|\boldsymbol\alpha|^2$ gives the modern **Maxwell stress**, and this notebook uses it. With it:
+
+- along the lines of force: a **tension** $\tfrac{\mu}{8\pi}|\boldsymbol\alpha|^2$ (the lines try to shorten);
+- across the lines: a **pressure** of the same size (the lines push each other apart).
+
+That is Faraday's picture of lines of force, as rubber bands that pull along their length and push sideways. The cell below checks it: it computes the traction on cuts at several angles for a field along $x$.
+""")
+
+code(r"""
+def maxwell_stress(alpha, mu_over_4pi=1.0):
+    alpha = np.asarray(alpha, float)
+    return mu_over_4pi*(np.outer(alpha, alpha) - 0.5*(alpha @ alpha)*np.eye(2))
+
+S = maxwell_stress([1.0, 0.0])                     # field along x, |alpha| = 1
+print("stress table:\n", S)
+for deg in (0, 45, 90):
+    nvec = np.array([np.cos(np.radians(deg)), np.sin(np.radians(deg))])
+    t = S @ nvec
+    print(f"cut normal at {deg:2d} deg: traction = {t.round(3)},  normal part t.n = {t @ nvec:+.3f}  ({'tension' if t @ nvec > 1e-12 else 'pressure' if t @ nvec < -1e-12 else 'shear only'})")
+""")
+
+md(r"""
+A cut across the field lines (normal at 0°) feels a pull of $+0.5$: tension. A cut along them (normal at 90°) feels a push of $-0.5$: pressure. At 45° the normal part vanishes and only shear is left.
+
+### Step 4. From the stress to the force
+
+Apply Step 2 to Maxwell's stress:
+
+$$f_i = \partial_j\sigma_{ij} = \frac{\mu}{4\pi}\,\partial_j(\alpha_i\alpha_j) \;-\; \partial_i p_1 .$$
+
+**(a) Product rule** on the first term:
+
+$$\partial_j(\alpha_i\alpha_j) = \alpha_i\,(\partial_j\alpha_j) + \alpha_j\,\partial_j\alpha_i = \alpha_i\,(\nabla\cdot\boldsymbol\alpha) + \big[(\boldsymbol\alpha\cdot\nabla)\boldsymbol\alpha\big]_i .$$
+
+**(b) The pressure term.** With $p_1 = \tfrac{\mu}{8\pi}|\boldsymbol\alpha|^2$:
+
+$$\partial_i p_1 = \frac{\mu}{4\pi}\,\alpha_j\,\partial_i\alpha_j = \frac{\mu}{4\pi}\Big[\nabla\big(\tfrac12|\boldsymbol\alpha|^2\big)\Big]_i .$$
+
+**(c) A vector identity:**
+
+$$\nabla\big(\tfrac12|\boldsymbol\alpha|^2\big) = (\boldsymbol\alpha\cdot\nabla)\boldsymbol\alpha + \boldsymbol\alpha\times(\nabla\times\boldsymbol\alpha).$$
+
+Check it in 2D. Write $\boldsymbol\alpha = (a, b)$ and $\nabla\times\boldsymbol\alpha = \omega\,\hat{\mathbf z}$ with $\omega = \partial_x b - \partial_y a$. Then $\boldsymbol\alpha\times(\omega\hat{\mathbf z}) = (b\,\omega,\; -a\,\omega)$. The $x$ parts: left side $a\,\partial_x a + b\,\partial_x b$; first term on the right $a\,\partial_x a + b\,\partial_y a$. Their difference is $b(\partial_x b - \partial_y a) = b\,\omega$, which is the $x$ part of the last term.
+
+**(d) Put (a), (b), (c) together.** The $(\boldsymbol\alpha\cdot\nabla)\boldsymbol\alpha$ terms cancel:
+
+$$\boxed{\;\mathbf{f} = \frac{\mu}{4\pi}\Big[\boldsymbol{\alpha}\,(\nabla\cdot\boldsymbol{\alpha}) \;-\; \boldsymbol{\alpha}\times(\nabla\times\boldsymbol{\alpha})\Big]\;}$$
+
+- The first term needs $\nabla\cdot\boldsymbol\alpha \neq 0$: a magnetic "pole". It pushes poles along the field.
+- The second term needs $\nabla\times\boldsymbol\alpha \neq 0$. In Part II Maxwell shows that $\nabla\times\boldsymbol\alpha$ is the electric current. So this term is the force on a current. Since $-\boldsymbol\alpha\times\mathbf J = \mathbf J\times\boldsymbol\alpha$, it is the familiar $\mathbf J\times\mathbf B$.
+- With a general $p_1$, one more term appears: $-\nabla\big(p_1 - \tfrac{\mu}{8\pi}|\boldsymbol\alpha|^2\big)$, an ordinary pressure gradient.
+
+### Step 5. The wire, by hand
+
+Let a round wire of radius $a$ carry a uniform current. Take $\mu/4\pi = 1$ and let $J$ stand for $\nabla\times\boldsymbol\alpha$ inside the wire.
+
+**Inside** ($r < a$): $\boldsymbol\alpha = \tfrac{J}{2}(-y,\,x)$.
+
+- $\nabla\cdot\boldsymbol\alpha = \partial_x(-\tfrac{J}{2}y) + \partial_y(\tfrac{J}{2}x) = 0$: no poles.
+- $\omega = \partial_x(\tfrac{J}{2}x) - \partial_y(-\tfrac{J}{2}y) = J$.
+- $\boldsymbol\alpha\times(J\hat{\mathbf z}) = (\alpha_y J,\; -\alpha_x J) = \tfrac{J^2}{2}(x,\; y)$.
+- So $\mathbf f = -\tfrac{J^2}{2}(x,\; y)$: it points to the axis and grows with distance from it.
+
+At $x = 0.5$ with $J = 1$: $f_x = -0.25$. The next code cell prints this number from the stress grid.
+
+**Outside** ($r > a$): $\boldsymbol\alpha = \tfrac{Ja^2}{2}\,\dfrac{(-y,\,x)}{r^2}$.
+
+- $\nabla\cdot\boldsymbol\alpha = 0$ again.
+- $\omega = \tfrac{Ja^2}{2}\big[\partial_x(x/r^2) + \partial_y(y/r^2)\big] = \tfrac{Ja^2}{2}\,\dfrac{(r^2 - 2x^2) + (r^2 - 2y^2)}{r^4} = 0$.
+- So $\mathbf f = 0$: outside the wire the tension along the circles and the pressure across them balance exactly.
+
+The picture: the circular lines of force act like rubber bands around a bundle. Their tension squeezes the wire. This is the **pinch effect**.
+
+**Check.** The cell below builds Maxwell's stress on a grid, takes its divergence numerically (Step 2), and compares with the boxed formula (Step 4).
 """)
 
 code(r"""
@@ -121,7 +222,7 @@ plt.tight_layout(); plt.show()
 md(r"""
 Inside the wire the force points toward the axis. The tension along the circular lines of force squeezes the wire (the "pinch effect"). Outside the wire the force is zero: there the pressure and the tension balance.
 
-**Try it 1.1.** Add a uniform field $H_0$ along $x$ with `wire_field(H0=0.5)`. Integrate $f_y$ over the wire's disk with `(fy*(R2 < a**2)).sum()*h*h`. Compare with $J\,\pi a^2 H_0$. This is the force on a wire in a magnet, obtained from stresses alone.
+**Try it 1.1.** Add a uniform field $H_0$ along $x$ with `wire_field(H0=0.5)`. Integrate $f_y$ over the wire's disk with `(fy*(R2 < a**2)).sum()*h*h`. Compare with $J\,\pi a^2 H_0$. This is the force on a wire in a magnet, obtained from stresses alone. *Hint:* by Step 4, $\mathbf f = -\boldsymbol\alpha\times(J\hat{\mathbf z})$ inside. The wire's own field gives zero net force by symmetry. The added field gives $-(H_0\hat{\mathbf x})\times(J\hat{\mathbf z}) = H_0 J\,\hat{\mathbf y}$ at every point of the disk. The grid answer comes within about 1%, because the grid's disk is not quite round.
 
 **Try it 1.2.** Show that a uniform field gives no force anywhere. Which term of the identity vanishes, and why?
 """)
