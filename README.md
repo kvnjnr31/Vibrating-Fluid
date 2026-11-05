@@ -13,6 +13,7 @@ The shell sits at r = R + w, with w = W0 cos(wt) Y(theta, phi). Fluid passes thr
 | `lbm/` | D2Q9 lattice Boltzmann solver in numba, with moving walls and body forces |
 | `lbm/reference/` | The original numpy solver it was refactored from (kept for comparison) |
 | `validation/` | Checks of the solver against exact solutions |
+| `notebooks/` | Study notebook `maxwell_to_vibrating_cells.ipynb`: Maxwell 1861 to experiments 9–13, with dynamical systems and statistics exercises (rebuild with `build_maxwell_notebook.py`) |
 
 ## Figures
 
