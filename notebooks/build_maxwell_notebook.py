@@ -139,7 +139,45 @@ $f_i$ is the force on the square per unit of its area. (In 3D the square becomes
 
 A uniform stress gives no force: opposite faces pull equally. Only a change in stress pushes. For a gas, $\sigma = -pI$ gives $\mathbf f = \nabla\cdot(-pI) = -\nabla p$: the gas pushes from high pressure to low. This is the pressure term of the Navier–Stokes equations.
 
-**Course link: Theory of Elasticity.** In the theory of elasticity, the same balance applies as $\nabla\cdot\sigma + \mathbf b = \mathbf 0$ (equilibrium) or $\rho\,\ddot{\mathbf u} = \nabla\cdot\sigma + \mathbf b$ (motion). Here $\mathbf b$ is a body force per unit volume, such as weight, and $\mathbf u$ is the displacement of the material. There, the stress comes from the strain through Hooke's law. In Maxwell's medium, the stress comes from the field $\boldsymbol\alpha$. The balance law does not change.
+**Course link: Theory of Elasticity. From the balance law to waves.** In Maxwell's medium the stress comes from the field $\boldsymbol\alpha$. In an elastic solid it comes from how much the material is stretched. The balance law is the same. Here it is, followed all the way to the wave equation.
+
+**(i) Index form.** Let $u_i(\mathbf x, t)$ be the displacement of the material (how far each bit has moved from where it started). Add a body force $b_i$ per unit volume, such as weight. If the material is at rest, the forces balance:
+
+$$\partial_j\sigma_{ij} + b_i = 0 \qquad (\text{equilibrium}).$$
+
+If they do not balance, Newton's second law applies to each unit volume, with mass $\rho$ and acceleration $\ddot u_i = \partial^2 u_i/\partial t^2$:
+
+$$\rho\,\ddot u_i = \partial_j\sigma_{ij} + b_i \qquad (\text{motion}).$$
+
+**(ii) Vector form.** Each value of $i$ ($x$, $y$ or $z$) gives one equation. The term $\partial_j\sigma_{ij}$ is the $i$-th component of $\nabla\cdot\sigma$. So the three equations pack into
+
+$$\nabla\cdot\sigma + \mathbf b = \mathbf 0 \quad (\text{equilibrium}), \qquad \rho\,\ddot{\mathbf u} = \nabla\cdot\sigma + \mathbf b \quad (\text{motion}).$$
+
+**(iii) Waves in a rod (1D).** Go back to the rod and let it vibrate along its length. The strain is the stretch per unit length, $\varepsilon = \partial u/\partial x$. Hooke's law says the stress follows the strain: $\sigma = E\,\varepsilon = E\,\partial u/\partial x$, with $E$ the stiffness (Young's modulus). Drop the body force. The motion equation becomes
+
+$$\rho\,\frac{\partial^2 u}{\partial t^2} = \frac{\partial}{\partial x}\Big(E\,\frac{\partial u}{\partial x}\Big) = E\,\frac{\partial^2 u}{\partial x^2} \quad\Longrightarrow\quad \frac{\partial^2 u}{\partial x^2} = \frac{1}{c^2}\,\frac{\partial^2 u}{\partial t^2}, \qquad c = \sqrt{E/\rho}.$$
+
+This is the wave equation. The stiffness pushes, the density resists, and their ratio sets the speed. For steel, $E \approx 200$ GPa and $\rho \approx 7850$ kg/m³, so $c \approx 5000$ m/s.
+
+**(iv) Waves in 3D.** For a solid that behaves the same in every direction, Hooke's law reads
+
+$$\sigma_{ij} = \lambda\,\varepsilon_{kk}\,\delta_{ij} + 2G\,\varepsilon_{ij}, \qquad \varepsilon_{ij} = \tfrac12\big(\partial_i u_j + \partial_j u_i\big),$$
+
+with $\lambda$ and $G$ the two Lamé constants. ($G$ is the shear stiffness. Books often call it $\mu$; this notebook saves $\mu$ for Maxwell.) Take the divergence, term by term:
+
+- $\partial_j\big(\lambda\,\varepsilon_{kk}\,\delta_{ij}\big) = \lambda\,\partial_i(\partial_k u_k) = \lambda\,\partial_i(\nabla\cdot\mathbf u)$,
+- $\partial_j\big(2G\,\varepsilon_{ij}\big) = G\,\big(\partial_i\partial_j u_j + \partial_j\partial_j u_i\big) = G\,\partial_i(\nabla\cdot\mathbf u) + G\,\nabla^2 u_i$.
+
+So, with no body force,
+
+$$\rho\,\ddot{\mathbf u} = (\lambda + G)\,\nabla(\nabla\cdot\mathbf u) + G\,\nabla^2\mathbf u \qquad (\text{the Navier–Cauchy equation}).$$
+
+Two kinds of wave come out of it:
+
+- **Shear (transverse) waves.** The material slides sideways without being squeezed, so $\nabla\cdot\mathbf u = 0$. Then $\nabla^2\mathbf u = \dfrac{1}{c_s^2}\,\ddot{\mathbf u}$, with $c_s = \sqrt{G/\rho}$.
+- **Compression (longitudinal) waves.** The material is squeezed without turning, so $\nabla\times\mathbf u = 0$ and $\nabla(\nabla\cdot\mathbf u) = \nabla^2\mathbf u$. Then $\nabla^2\mathbf u = \dfrac{1}{c_p^2}\,\ddot{\mathbf u}$, with $c_p = \sqrt{(\lambda + 2G)/\rho}$.
+
+**Why this matters for Maxwell.** In Part III, Maxwell treats light as a shear wave in his elastic medium. He computes its speed the same way as $c_s$: from the medium's shear stiffness and its density. Part 3 of this notebook builds the lattice version of that wave.
 """)
 
 md(r"""
