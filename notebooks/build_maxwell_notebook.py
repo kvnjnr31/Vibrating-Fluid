@@ -69,7 +69,7 @@ md(r"""
 ---
 ## Part 1. Maxwell's vortex stress (1861, Part I)
 
-**Maxwell's picture.** Space is full of small vortices. Each vortex spins about an axis along the magnetic force $\boldsymbol{\alpha}$. A spinning vortex flings its fluid outward, like a spinning bucket of water, so it pushes on its neighbors from the side. Along its axis it does not. So the medium pushes harder across the lines of force than along them.
+**Maxwell's picture.** Space is full of small vortices. Each vortex spins about an axis along the magnetic force $\boldsymbol{\alpha}$ (Step 3 explains $\boldsymbol\alpha$). A spinning vortex flings its fluid outward, like a spinning bucket of water, so it pushes on its neighbors from the side. Along its axis it does not. So the medium pushes harder across the lines of force than along them.
 
 Maxwell turns that picture into a **stress**, then into a **force**. This part rebuilds the elasticity needed for both steps (Steps 1–5), then checks the result on a wire.
 
@@ -165,7 +165,7 @@ This is the wave equation. The stiffness pushes, the density resists, and their 
 
 $$\sigma_{ij} = \lambda\,\varepsilon_{kk}\,\delta_{ij} + 2G\,\varepsilon_{ij}, \qquad \varepsilon_{ij} = \tfrac12\big(\partial_i u_j + \partial_j u_i\big),$$
 
-with $\lambda$ and $G$ the two Lamé constants. ($G$ is the shear stiffness. Books often call it $\mu$; this notebook saves $\mu$ for Maxwell.) Here $\delta_{ij}$ is the **Kronecker delta** from Step 1: $\delta_{ij} = 1$ when $i = j$ and $0$ otherwise, the index form of the identity table. The term $\lambda\,\varepsilon_{kk}\,\delta_{ij}$ is therefore an equal push or pull on every face, set by $\varepsilon_{kk} = \varepsilon_{xx} + \varepsilon_{yy} + \varepsilon_{zz} = \nabla\cdot\mathbf u$, the change in volume. Take the divergence, term by term:
+with $\lambda$ and $G$ the two Lamé constants. ($G$ is the shear stiffness. Books often call it $\mu$; this notebook saves $\mu$ for Maxwell.) The term $\lambda\,\varepsilon_{kk}\,\delta_{ij}$ is an equal push or pull on every face, set by $\varepsilon_{kk} = \varepsilon_{xx} + \varepsilon_{yy} + \varepsilon_{zz} = \nabla\cdot\mathbf u$, the change in volume. Take the divergence, term by term:
 
 - $\partial_j\big(\lambda\,\varepsilon_{kk}\,\delta_{ij}\big) = \lambda\,\partial_i(\partial_k u_k) = \lambda\,\partial_i(\nabla\cdot\mathbf u)$. The $\delta_{ij}$ keeps only the term with $j = i$, so $\partial_j$ becomes $\partial_i$.
 - $\partial_j\big(2G\,\varepsilon_{ij}\big) = G\,\big(\partial_i\partial_j u_j + \partial_j\partial_j u_i\big) = G\,\partial_i(\nabla\cdot\mathbf u) + G\,\nabla^2 u_i$.
@@ -185,10 +185,23 @@ Two kinds of wave come out of it:
 md(r"""
 ### Step 3. Maxwell's stress
 
-Maxwell finds (Prop. II) that the pressure across the lines of force exceeds the pressure along them by $\tfrac{\mu}{4\pi}|\boldsymbol\alpha|^2$. Here $\mu$ plays the density of the vortex medium and $|\boldsymbol\alpha|$ the speed of the vortex rims, so the excess is "density times speed squared", like the pressure in a spinning bucket. As a stress:
+**What $\boldsymbol\alpha$ is.** Maxwell names the magnetic force at a point by its three components, $\alpha$, $\beta$, $\gamma$. This notebook packs them into one arrow, $\boldsymbol\alpha = (\alpha, \beta, \gamma)$, and writes $\alpha_i$ for its $i$-th component. In Maxwell's model the arrow has a mechanical meaning (panel (a) below):
+
+- its **direction** is the axis of the vortices at that point, which is also the direction of the line of force;
+- its **length** $|\boldsymbol\alpha|$ is the speed of the vortex rims.
+
+The coefficient $\mu$ is the density of the vortex medium. In today's notation, $\boldsymbol\alpha$ is the magnetic field $\mathbf H$, $\mu$ is the magnetic permeability, and $\mu\boldsymbol\alpha$ is the magnetic induction $\mathbf B$.
+
+**The stress.** Maxwell finds (Prop. II) that the pressure across the lines of force exceeds the pressure along them by $\tfrac{\mu}{4\pi}|\boldsymbol\alpha|^2$. Here $\mu$ plays the density of the vortex medium and $|\boldsymbol\alpha|$ the speed of the vortex rims, so the excess is "density times speed squared", like the pressure in a spinning bucket. As a stress:
 
 $$\sigma_{ij} = \underbrace{\frac{\mu}{4\pi}\,\alpha_i\alpha_j}_{\text{a rope along }\boldsymbol\alpha} \;-\; \underbrace{p_1\,\delta_{ij}}_{\text{a gas}} .$$
 
+The schematic shows (a) what $\boldsymbol\alpha$ means for one vortex, (b) how a bundle of vortices pushes sideways and pulls along its length, and (c) how the two terms of the stress add up on a small square.
+""")
+
+md_img("figures/maxwell_stress.png", "Maxwell's vortices and stress: (a) one vortex, alpha along its axis with length equal to the rim speed; (b) vortex tubes along the field push sideways and pull along their length; (c) rope term plus gas term equals Maxwell's stress.")
+
+md(r"""
 The first term is the rope of Step 1 with $\mathbf e = \boldsymbol\alpha/|\boldsymbol\alpha|$ and $T = \tfrac{\mu}{4\pi}|\boldsymbol\alpha|^2$. The second is a plain pressure $p_1$ in all directions. Maxwell leaves $p_1$ general. The choice $p_1 = \tfrac{\mu}{8\pi}|\boldsymbol\alpha|^2$ gives the modern **Maxwell stress**, and this notebook uses it. With it:
 
 - along the lines of force: a **tension** $\tfrac{\mu}{8\pi}|\boldsymbol\alpha|^2$ (the lines try to shorten);
