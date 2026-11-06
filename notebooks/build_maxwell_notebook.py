@@ -185,7 +185,7 @@ Two kinds of wave come out of it:
 md(r"""
 ### Step 3. Maxwell's stress
 
-**What $\boldsymbol\alpha$ is.** Maxwell names the magnetic force at a point by its three components, $\alpha$, $\beta$, $\gamma$. This notebook packs them into one arrow, $\boldsymbol\alpha = (\alpha, \beta, \gamma)$, and writes $\alpha_i$ for its $i$-th component. In Maxwell's model the arrow has a mechanical meaning (panel (a) below):
+**What $\boldsymbol\alpha$ is.** Maxwell names the magnetic force at a point by its three components, $\alpha$, $\beta$, $\gamma$. This notebook packs them into one arrow, $\boldsymbol\alpha = (\alpha, \beta, \gamma)$, and writes $\alpha_i$ for its $i$-th component. Its length is $|\boldsymbol\alpha| = \sqrt{\alpha^2 + \beta^2 + \gamma^2}$ (panel (b) below). In Maxwell's model the arrow has a mechanical meaning (panel (a)):
 
 - its **direction** is the axis of the vortices at that point, which is also the direction of the line of force;
 - its **length** $|\boldsymbol\alpha|$ is the speed of the vortex rims.
@@ -196,10 +196,10 @@ The coefficient $\mu$ is the density of the vortex medium. In today's notation, 
 
 $$\sigma_{ij} = \underbrace{\frac{\mu}{4\pi}\,\alpha_i\alpha_j}_{\text{a rope along }\boldsymbol\alpha} \;-\; \underbrace{p_1\,\delta_{ij}}_{\text{a gas}} .$$
 
-The schematic shows (a) what $\boldsymbol\alpha$ means for one vortex, (b) how a bundle of vortices pushes sideways and pulls along its length, and (c) how the two terms of the stress add up on a small square.
+The schematic shows (a) what $\boldsymbol\alpha$ means for one vortex, (b) its three components $\alpha$, $\beta$, $\gamma$, (c) how a bundle of vortices pushes sideways and pulls along its length, and (d) how the two terms of the stress add up on a small square.
 """)
 
-md_img("figures/maxwell_stress.png", "Maxwell's vortices and stress: (a) one vortex, alpha along its axis with length equal to the rim speed; (b) vortex tubes along the field push sideways and pull along their length; (c) rope term plus gas term equals Maxwell's stress.")
+md_img("figures/maxwell_stress.png", "Maxwell's vortices and stress: (a) one vortex, alpha along its axis with length equal to the rim speed; (b) the three components of alpha; (c) vortex tubes along the field push sideways and pull along their length; (d) rope term plus gas term equals Maxwell's stress.")
 
 md(r"""
 The first term is the rope of Step 1 with $\mathbf e = \boldsymbol\alpha/|\boldsymbol\alpha|$ and $T = \tfrac{\mu}{4\pi}|\boldsymbol\alpha|^2$. The second is a plain pressure $p_1$ in all directions. Maxwell leaves $p_1$ general. The choice $p_1 = \tfrac{\mu}{8\pi}|\boldsymbol\alpha|^2$ gives the modern **Maxwell stress**, and this notebook uses it. With it:

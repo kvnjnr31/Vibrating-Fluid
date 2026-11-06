@@ -57,10 +57,10 @@ def element(ax, x0, y0, top, side, title, s=0.55, k=0.55):
     ax.text(x0, y0 - s - 1.45, title, ha="center", va="top", fontsize=11.5)
 
 
-fig = plt.figure(figsize=(16, 10.5))
+fig = plt.figure(figsize=(16, 15.5))
 
 # (a) one vortex -------------------------------------------------------------------------------------
-ax = fig.add_axes([0.02, 0.43, 0.30, 0.52])
+ax = fig.add_axes([0.02, 0.63, 0.40, 0.35])
 tube(ax, 0, 0, r=0.75, h=3.6)
 ax.plot([0, 0], [-2.4, 2.4], color="k", lw=1, ls=(0, (6, 4)))
 arrow(ax, (0, 2.45), (0, 0.9), lw=2.6)
@@ -74,7 +74,7 @@ ax.set_xlim(-2.2, 3.3); ax.set_ylim(-3.0, 3.6); ax.set_aspect("equal"); ax.axis(
 ax.set_title("(a) One vortex: what $\\boldsymbol{\\alpha}$ means")
 
 # (b) a bundle of vortices along the field lines -------------------------------------------------------
-ax = fig.add_axes([0.35, 0.43, 0.63, 0.52])
+ax = fig.add_axes([0.10, 0.29, 0.85, 0.34])
 xs = np.arange(-3, 4) * 1.35
 for xl in xs:
     tube(ax, xl, 0, r=0.36, h=3.4)
@@ -88,10 +88,37 @@ for xl in xs[::2]:
 ax.text(xs[-1] + 0.75, 0, "spinning tubes push\nsideways on their\nneighbors: pressure\nacross the lines", fontsize=11.5, va="center")
 ax.text(xs[-1] + 0.75, 2.35, "along their axes the tubes\ndo not push; the lines try\nto shorten, like stretched\nrubber bands (grey arrows):\ntension along the lines", fontsize=11.5, va="center")
 ax.set_xlim(xs[0] - 0.8, xs[-1] + 4.6); ax.set_ylim(-3.2, 3.6); ax.set_aspect("equal"); ax.axis("off")
-ax.set_title("(b) Many vortices, axes along the field (field along y)")
+ax.set_title("(c) Many vortices, axes along the field (field along y)")
 
-# (c) the two terms of the stress ---------------------------------------------------------------------
-ax = fig.add_axes([0.03, 0.02, 0.94, 0.38])
+# (b) the three components of alpha ------------------------------------------------------------------
+ax = fig.add_axes([0.47, 0.63, 0.50, 0.35])
+def P(x, y, z):                                   # oblique view: y to the right, z up, x out of the page
+    return np.array([y - 0.55 * x * np.cos(np.radians(35)), z - 0.55 * x * np.sin(np.radians(35))])
+for v, name in (((3.8, 0, 0), "$x$"), ((0, 3.0, 0), "$y$"), ((0, 0, 2.6), "$z$")):
+    arrow(ax, P(0, 0, 0), P(*v), color="0.55", lw=1.3, ms=12)
+    ax.text(*(P(*v) + [0.08, 0.06]), name, fontsize=13, color="0.4")
+a, b, g = 1.9, 1.8, 1.6
+O, A, AB, ABG = P(0, 0, 0), P(a, 0, 0), P(a, b, 0), P(a, b, g)
+for p, q in ((A, AB), (P(0, b, 0), AB), (AB, ABG)):
+    ax.plot([p[0], q[0]], [p[1], q[1]], color="0.55", lw=1, ls=(0, (4, 3)))
+arrow(ax, O, A, color="0.3", lw=2.4)
+arrow(ax, A, AB - A, color="0.3", lw=2.4)
+arrow(ax, AB, ABG - AB, color="0.3", lw=2.4)
+arrow(ax, O, ABG, lw=3.0, ms=18)
+ax.text(*(0.5 * (O + A) + [-0.45, -0.1]), r"$\alpha$", fontsize=16, color="0.25")
+ax.text(*(0.5 * (A + AB) + [0.0, -0.32]), r"$\beta$", fontsize=16, color="0.25")
+ax.text(*(0.5 * (AB + ABG) + [0.1, 0.0]), r"$\gamma$", fontsize=16, color="0.25")
+ax.text(*(0.5 * (O + ABG) + [-0.55, 0.15]), r"$\boldsymbol{\alpha}$", fontsize=19)
+ax.text(3.3, 1.9, r"$\boldsymbol{\alpha} = (\alpha,\ \beta,\ \gamma)$" "\n"
+        r"$|\boldsymbol{\alpha}| = \sqrt{\alpha^2 + \beta^2 + \gamma^2}$" "\n\n"
+        "$\\alpha$, $\\beta$, $\\gamma$: how much of the magnetic\nforce points along $x$, $y$, $z$\n\n"
+        "the vortex axis points along $\\boldsymbol{\\alpha}$;\nits rim speed is $|\\boldsymbol{\\alpha}|$",
+        fontsize=12.5, va="center", linespacing=1.5)
+ax.set_xlim(-2.2, 7.4); ax.set_ylim(-1.6, 3.2); ax.set_aspect("equal"); ax.axis("off")
+ax.set_title("(b) The three components of $\\boldsymbol{\\alpha}$ (Maxwell's $\\alpha$, $\\beta$, $\\gamma$)")
+
+# (d) the two terms of the stress ---------------------------------------------------------------------
+ax = fig.add_axes([0.03, 0.01, 0.94, 0.26])
 element(ax, 0, 0, 2, 0, "rope term  $\\frac{\\mu}{4\\pi}\\alpha_i\\alpha_j$\npull $2P$ along $\\boldsymbol{\\alpha}$ only")
 ax.text(2.35, 0, "+", fontsize=30, ha="center", va="center")
 element(ax, 4.7, 0, -1, -1, "gas term  $-p_1\\delta_{ij}$, with $p_1 = P$\npush $P$ on every face")
@@ -102,6 +129,6 @@ for xl in np.linspace(8.65, 10.15, 5):
 ax.text(12.0, 0, "$P = \\dfrac{\\mu}{8\\pi}|\\boldsymbol{\\alpha}|^2$\n\narrows away from a face: pull\narrows into a face: push",
         fontsize=12, va="center")
 ax.set_xlim(-1.8, 15.6); ax.set_ylim(-3.2, 2.0); ax.set_aspect("equal"); ax.axis("off")
-ax.set_title("(c) The two terms of the stress, on a small square (field along y)")
+ax.set_title("(d) The two terms of the stress, on a small square (field along y)")
 
 fig.savefig(os.path.join(os.path.dirname(os.path.abspath(__file__)), "maxwell_stress.png"), dpi=105)
