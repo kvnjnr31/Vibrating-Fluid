@@ -75,7 +75,15 @@ Maxwell turns that picture into a **stress**, then into a **force**. This part r
 
 ### Step 1. What a stress is
 
-Cut a material along a small surface. Let $\mathbf{n}$ be the unit normal of the cut. The material on one side pulls (or pushes) on the other side with a force per unit area $\mathbf{t}$, the **traction**. The stress $\sigma$ is the table of numbers that turns the normal into the traction:
+**Stress is force per unit area.** Pull a straight rod with a force $F$ at each end. Cut it anywhere across its length. The top part pulls on the bottom part with the same force $F$, spread over the cross-section area $A$. The stress is
+
+$$\sigma = \frac{F}{A}.$$
+
+A thick rod and a thin rod pulled with the same $F$ carry the same force, but the thin one has the larger stress. Stress tells how hard each bit of the cut is pulled.
+
+**Stress depends on which way the cut faces.** Cut the same rod along its length instead of across it. The two halves sit side by side, and nothing pulls one away from the other. So one number is not enough: the force per area depends on the direction of the cut.
+
+To keep track, describe a cut by its unit normal $\mathbf{n}$, the arrow that points straight out of the cut. The force per unit area on that cut is a vector $\mathbf{t}$, the **traction**. The stress $\sigma$ is the table of numbers that turns the normal into the traction:
 
 $$t_i = \sigma_{ij}\,n_j \qquad (\text{sum over the repeated index } j).$$
 
@@ -113,13 +121,21 @@ md(r"""
 
 ### Step 2. A stress that changes from place to place pushes the material
 
-Take a small box of size $dx \times dy$. The right face feels $+\sigma_{xx}(x + dx)\,dy$ in the $x$ direction. The left face, with normal $-\hat{\mathbf x}$, feels $-\sigma_{xx}(x)\,dy$. The top and bottom faces add the shear $\sigma_{xy}$ in the same way. The net $x$ force is
+Stress is force per area, so the force on a face is **stress × face area**. Take a small square of size $dx \times dy$, one unit thick. Its right and left faces each have area $dy$. Its top and bottom faces each have area $dx$.
 
-$$\big[\sigma_{xx}(x+dx) - \sigma_{xx}(x)\big]dy + \big[\sigma_{xy}(y+dy) - \sigma_{xy}(y)\big]dx \;\approx\; \Big(\frac{\partial \sigma_{xx}}{\partial x} + \frac{\partial \sigma_{xy}}{\partial y}\Big)\,dx\,dy .$$
+- Right face (normal $+\hat{\mathbf x}$): force $+\sigma_{xx}(x + dx)\,dy$ in the $x$ direction.
+- Left face (normal $-\hat{\mathbf x}$): force $-\sigma_{xx}(x)\,dy$. Same stress table, but the face points the other way, so the force flips sign.
+- Top and bottom faces: the shear $\sigma_{xy}$ adds forces $+\sigma_{xy}(y + dy)\,dx$ and $-\sigma_{xy}(y)\,dx$ in the $x$ direction.
 
-Divide by the area. The force per unit area (in 3D, per unit volume) is
+Add the four. The net $x$ force on the square is
 
-$$f_i = \partial_j\,\sigma_{ij}, \qquad\text{the divergence of the stress.}$$
+$$dF_x = \big[\sigma_{xx}(x+dx) - \sigma_{xx}(x)\big]dy + \big[\sigma_{xy}(y+dy) - \sigma_{xy}(y)\big]dx \;\approx\; \Big(\frac{\partial \sigma_{xx}}{\partial x} + \frac{\partial \sigma_{xy}}{\partial y}\Big)\,dx\,dy .$$
+
+The product $dx\,dy = dA$ is the area of the square. So the net force is a number times $dA$:
+
+$$dF_i = f_i\,dA, \qquad f_i = \partial_j\,\sigma_{ij}, \qquad\text{the divergence of the stress.}$$
+
+$f_i$ is the force on the square per unit of its area. (In 3D the square becomes a box, $dA$ becomes the volume $dV = dx\,dy\,dz$, and $f_i$ is the force per unit volume.)
 
 A uniform stress gives no force: opposite faces pull equally. Only a change in stress pushes. For a gas, $\sigma = -pI$ gives $\mathbf f = -\nabla p$: the gas pushes from high pressure to low.
 
