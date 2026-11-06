@@ -165,9 +165,9 @@ This is the wave equation. The stiffness pushes, the density resists, and their 
 
 $$\sigma_{ij} = \lambda\,\varepsilon_{kk}\,\delta_{ij} + 2G\,\varepsilon_{ij}, \qquad \varepsilon_{ij} = \tfrac12\big(\partial_i u_j + \partial_j u_i\big),$$
 
-with $\lambda$ and $G$ the two Lamé constants. ($G$ is the shear stiffness. Books often call it $\mu$; this notebook saves $\mu$ for Maxwell.) Take the divergence, term by term:
+with $\lambda$ and $G$ the two Lamé constants. ($G$ is the shear stiffness. Books often call it $\mu$; this notebook saves $\mu$ for Maxwell.) Here $\delta_{ij}$ is the **Kronecker delta** from Step 1: $\delta_{ij} = 1$ when $i = j$ and $0$ otherwise, the index form of the identity table. The term $\lambda\,\varepsilon_{kk}\,\delta_{ij}$ is therefore an equal push or pull on every face, set by $\varepsilon_{kk} = \varepsilon_{xx} + \varepsilon_{yy} + \varepsilon_{zz} = \nabla\cdot\mathbf u$, the change in volume. Take the divergence, term by term:
 
-- $\partial_j\big(\lambda\,\varepsilon_{kk}\,\delta_{ij}\big) = \lambda\,\partial_i(\partial_k u_k) = \lambda\,\partial_i(\nabla\cdot\mathbf u)$,
+- $\partial_j\big(\lambda\,\varepsilon_{kk}\,\delta_{ij}\big) = \lambda\,\partial_i(\partial_k u_k) = \lambda\,\partial_i(\nabla\cdot\mathbf u)$. The $\delta_{ij}$ keeps only the term with $j = i$, so $\partial_j$ becomes $\partial_i$.
 - $\partial_j\big(2G\,\varepsilon_{ij}\big) = G\,\big(\partial_i\partial_j u_j + \partial_j\partial_j u_i\big) = G\,\partial_i(\nabla\cdot\mathbf u) + G\,\nabla^2 u_i$.
 
 So, with no body force,
