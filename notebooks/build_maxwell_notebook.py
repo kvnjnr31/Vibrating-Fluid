@@ -97,6 +97,8 @@ Two examples to keep in mind:
 - **A gas at pressure $p$.** A gas pushes equally in every direction and never drags sideways. So its table has $-p$ on the diagonal and zeros elsewhere:
 $$\sigma = \begin{bmatrix}-p & 0\\ 0 & -p\end{bmatrix} = -p\,I ,$$
 where $I$ is the identity table. The minus sign means push (positive means pull). Take a cut facing $x$, so $\mathbf n = (1, 0)$. The force on it is $\mathbf t = \sigma\mathbf n = (-p,\ 0)$: strength $p$, pointing back into the cut, against $\mathbf n$. A cut facing any other way gives the same: $\mathbf t = -p\,\mathbf n$, a push of strength $p$ straight into the cut, never sideways.
+
+  In index form the identity table is the **Kronecker delta**: $\delta_{ij} = 1$ when $i = j$, and $\delta_{ij} = 0$ when $i \neq j$. So the gas stress is $\sigma_{ij} = -p\,\delta_{ij}$. Multiplying a number by $\delta_{ij}$ puts it on the diagonal only: an equal push on every face, no shear. Summing with $\delta$ just renames an index, $\delta_{ij}\,v_j = v_i$, because only the term with $j = i$ survives.
 - **A rope** pulled with tension $T$ along the unit vector $\mathbf{e}$: $\sigma_{ij} = T\,e_i e_j$. For a rope along $y$, $\mathbf e = (0, 1)$, this is $\begin{bmatrix}0 & 0\\ 0 & T\end{bmatrix}$, the rod in the figure below. A cut across the rope ($\mathbf{n} = \mathbf{e}$) feels $\mathbf{t} = T\mathbf{e}$: a pull of strength $T$. A cut along the rope ($\mathbf{n}\perp\mathbf{e}$) feels nothing.
 
 **The table in 2D.** The stress at a point is four numbers. Each one answers: *on a cut facing this way, how hard is the force pushing that way?*
