@@ -133,13 +133,13 @@ $$dF_x = \big[\sigma_{xx}(x+dx) - \sigma_{xx}(x)\big]dy + \big[\sigma_{xy}(y+dy)
 
 The product $dx\,dy = dA$ is the area of the square. So the net force is a number times $dA$:
 
-$$dF_i = f_i\,dA, \qquad f_i = \partial_j\,\sigma_{ij}, \qquad\text{the divergence of the stress.}$$
+$$dF_i = f_i\,dA, \qquad f_i = \partial_j\,\sigma_{ij}, \qquad \mathbf{f} = \nabla\cdot\sigma, \qquad\text{the divergence of the stress.}$$
 
 $f_i$ is the force on the square per unit of its area. (In 3D the square becomes a box, $dA$ becomes the volume $dV = dx\,dy\,dz$, and $f_i$ is the force per unit volume.)
 
-A uniform stress gives no force: opposite faces pull equally. Only a change in stress pushes. For a gas, $\sigma = -pI$ gives $\mathbf f = -\nabla p$: the gas pushes from high pressure to low.
+A uniform stress gives no force: opposite faces pull equally. Only a change in stress pushes. For a gas, $\sigma = -pI$ gives $\mathbf f = \nabla\cdot(-pI) = -\nabla p$: the gas pushes from high pressure to low. This is the pressure term of the Navier–Stokes equations.
 
-**Course link: Theory of Elasticity.** The elasticity course writes the same balance as $\partial_j\sigma_{ij} + b_i = 0$ (equilibrium) or $\rho\,\ddot u_i = \partial_j\sigma_{ij} + b_i$ (motion). There, the stress comes from the strain through Hooke's law. In Maxwell's medium, the stress comes from the field $\boldsymbol\alpha$. The balance law does not change.
+**Course link: Theory of Elasticity.** In the theory of elasticity, the same balance applies as $\partial_j\sigma_{ij} + b_i = 0$ (equilibrium) or $\rho\,\ddot u_i = \partial_j\sigma_{ij} + b_i$ (motion). There, the stress comes from the strain through Hooke's law. In Maxwell's medium, the stress comes from the field $\boldsymbol\alpha$. The balance law does not change.
 """)
 
 md(r"""
