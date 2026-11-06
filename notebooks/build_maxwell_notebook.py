@@ -226,6 +226,51 @@ for deg in (0, 45, 90):
 md(r"""
 A cut across the field lines (normal at 0°) feels a pull of $+0.5$: tension. A cut along them (normal at 90°) feels a push of $-0.5$: pressure. At 45° the normal part vanishes and only shear is left.
 
+### Step 3b. Where the rope term comes from (worked)
+
+Maxwell's medium is a fluid, so look at one vortex tube of fluid with density $\rho$. Its axis points along the unit vector $\mathbf e$. It spins as a solid body: spin rate $\omega$, radius $R$, rim speed $v = \omega R$. The figure below follows the steps.
+
+**(1) The fluid moves only around the axis.** At distance $r$ from the axis the speed is $\omega r$. It points across the axis, never along it (panel a).
+
+**(2) Moving fluid carries a push.** Fluid with velocity $\mathbf u$ carries momentum $\rho\mathbf u$ per unit volume, and it carries that momentum along at speed $\mathbf u$. A cut through the fluid feels this flow of momentum as an extra push, the same push felt from a jet of water. In stress form:
+
+$$\sigma_{ij} = -p\,\delta_{ij} - \rho\,u_i u_j .$$
+
+**Course link: PDEs (Navier–Stokes).** The term $-\rho\,u_iu_j$ is the convection term $\rho(\mathbf u\cdot\nabla)\mathbf u$ of the Navier–Stokes equations, written as a stress. Averaged over turbulent eddies, the same term is called the Reynolds stress.
+
+**(3) Average over the tube's cross-section.** Put the axis along $z$. The average of $r^2$ over the disk is
+
+$$\langle r^2\rangle = \frac{1}{\pi R^2}\int_0^R r^2\,2\pi r\,dr = \frac{R^2}{2}, \qquad\text{so}\qquad \langle u_x^2 + u_y^2\rangle = \omega^2\langle r^2\rangle = \frac{v^2}{2}.$$
+
+The disk looks the same from $x$ and from $y$, so the two share it equally: $\langle u_x^2\rangle = \langle u_y^2\rangle = v^2/4$. Along the axis, $\langle u_z^2\rangle = 0$. The cross term $\langle u_xu_y\rangle$ is zero, because opposite sides of the disk cancel (panel c).
+
+**(4) The tube's average stress.** Let $\bar p$ be the average pressure. Then
+
+$$\sigma_{xx} = \sigma_{yy} = -\bar p - \frac{\rho v^2}{4}, \qquad \sigma_{zz} = -\bar p, \qquad \text{all other entries } 0 .$$
+
+Across the axis the medium is pushed harder, by $\rho v^2/4$. Along the axis it gets no extra push (panel b).
+
+**(5) Split off the equal push.** Take the larger push, $p_1 = \bar p + \rho v^2/4$, as an equal push on every face. What is left acts on the $z$ faces only:
+
+$$\sigma_{ij} = -p_1\,\delta_{ij} + \frac{\rho v^2}{4}\,e_ie_j .$$
+
+Check the two directions. Across: $-p_1 + 0 = -\bar p - \rho v^2/4$. Along: $-p_1 + \rho v^2/4 = -\bar p$. Both match step (4). The second term has exactly the rope form $T\,e_ie_j$ of Step 1, with $T = \rho v^2/4$ (panel d).
+
+**(6) Bring in $\boldsymbol\alpha$.** The arrow $\boldsymbol\alpha$ points along the axis and has the rim speed as its length, so $\boldsymbol\alpha = v\,\mathbf e$ and $\alpha_i\alpha_j = v^2 e_ie_j$:
+
+$$\sigma_{ij} = \frac{\rho}{4}\,\alpha_i\alpha_j - p_1\,\delta_{ij} .$$
+
+This is Maxwell's stress with $\mu/4\pi = \rho/4$, that is $\mu = \pi\rho$ for this tube. The factor $1/4$ comes from the solid-body spin: it depends on how the speed varies inside the vortex. Maxwell keeps that factor general and folds it, together with the density, into the single constant $\mu$. (Worth checking against Prop. II in the original paper.)
+
+**What the rope term means.** Nothing in the medium pulls. Along the axis the push is smaller than across it, by $\rho v^2/4$. After an equal push on all faces is taken out, that shortfall looks exactly like a pull along the axis. This is why lines of force behave as if they "pull along their length".
+
+**Try it 1.3.** Let every bit of fluid in the tube move at the same speed $v$ around the axis (instead of $\omega r$). Repeat steps (3)–(6). Show that the rope term becomes $\tfrac{\rho}{2}\alpha_i\alpha_j$, so $\mu = 2\pi\rho$. The form of the stress stays the same; only the constant changes.
+""")
+
+md_img("figures/rope_term.png", "Where the rope term comes from: (a) a spinning tube seen end-on; (b) the spin pushes across the axis only; (c) the average of the squared speed over the disk; (d) the tube's stress split into an equal push plus a rope term along the axis.")
+
+md(r"""
+
 ### Step 4. From the stress to the force
 
 Apply Step 2 to Maxwell's stress:
