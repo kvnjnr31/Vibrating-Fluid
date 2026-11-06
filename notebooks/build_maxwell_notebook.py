@@ -139,7 +139,7 @@ $f_i$ is the force on the square per unit of its area. (In 3D the square becomes
 
 A uniform stress gives no force: opposite faces pull equally. Only a change in stress pushes. For a gas, $\sigma = -pI$ gives $\mathbf f = \nabla\cdot(-pI) = -\nabla p$: the gas pushes from high pressure to low. This is the pressure term of the Navier–Stokes equations.
 
-**Course link: Theory of Elasticity.** In the theory of elasticity, the same balance applies as $\partial_j\sigma_{ij} + b_i = 0$ (equilibrium) or $\rho\,\ddot u_i = \partial_j\sigma_{ij} + b_i$ (motion). There, the stress comes from the strain through Hooke's law. In Maxwell's medium, the stress comes from the field $\boldsymbol\alpha$. The balance law does not change.
+**Course link: Theory of Elasticity.** In the theory of elasticity, the same balance applies as $\nabla\cdot\sigma + \mathbf b = \mathbf 0$ (equilibrium) or $\rho\,\ddot{\mathbf u} = \nabla\cdot\sigma + \mathbf b$ (motion). Here $\mathbf b$ is a body force per unit volume, such as weight, and $\mathbf u$ is the displacement of the material. There, the stress comes from the strain through Hooke's law. In Maxwell's medium, the stress comes from the field $\boldsymbol\alpha$. The balance law does not change.
 """)
 
 md(r"""
